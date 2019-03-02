@@ -54,5 +54,5 @@ jobs:
           name: "Apply terraform"
           command: |
              cd deployment
-             terraform -input=false -auto-approve apply tfplan
+             terraform apply -input=false -auto-approve tfplan
 
