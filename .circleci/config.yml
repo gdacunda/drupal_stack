@@ -6,6 +6,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+          docker_layer_caching: true
       - run:
           name: Install dependencies
           command: |
@@ -27,5 +28,7 @@ jobs:
       - run:
           name: "Plan"
           command: |
+             cd deployment
+             if [ -e .terraform/modules ]; then rm -rf .terraform/modules; fi;
              terraform init -backend-config=backend.tfvars
              terraform state pull           
