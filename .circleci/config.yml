@@ -36,7 +36,7 @@ jobs:
       - run:
           name: "Init terraform"
           command: |
-             echo '${SSH_PUBLIC_KEY}' > deployment/networking/keys/admin_ssh_key.pub
+             echo "${SSH_PUBLIC_KEY}" > deployment/networking/keys/admin_ssh_key.pub
              cd deployment
              if [ -e .terraform/modules ]; then rm -rf .terraform/modules; fi;
              terraform init -backend-config=backend.tfvars
