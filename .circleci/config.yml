@@ -24,3 +24,8 @@ jobs:
       - run:
           name: "Build images"
           command: docker-compose build
+      - run:
+          name: "Plan"
+          command: |
+             terraform init -backend-config=backend.tfvars
+             terraform state pull           
