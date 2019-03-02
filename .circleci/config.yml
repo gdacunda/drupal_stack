@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:18.06.3-ce-git
+    steps:
+      - checkout
+      - run:
+          name: "Infos"
+          command: |
+            docker-compose --version
+            docker version
+      - run:
+          name: "Build images"
+          command: docker-compose build
