@@ -1,2 +1,2 @@
 # drupal_stack
-Example deployment of Druapl stack using Terraform
+Example deployment of Drupal stack using Terraform

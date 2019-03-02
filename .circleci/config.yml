@@ -5,8 +5,17 @@ jobs:
       - image: docker:18.06.3-ce-git
     steps:
       - checkout
+      - setup_remote_docker
       - run:
-          name: "Infos"
+          name: Install dependencies
+          command: |
+            apk add --no-cache \
+              py-pip=18.1-r0
+            pip install \
+              docker-compose==1.23.2 \
+              awscli==1.16.116
+      - run:
+          name: "Show Info"
           command: |
             docker-compose --version
             docker version
