@@ -49,10 +49,15 @@ jobs:
           name: "Plan terraform"
           command: |
              cd deployment
-             terraform plan -detailed-exitcode -var 'database_image_tag=1.0.$CIRCLE_BUILD_NUM' -var 'webserver_image_tag=1.0.$CIRCLE_BUILD_NUM'
+             terraform plan \
+                -input=false \
+                -detailed-exitcode \
+                -var 'database_image_tag=1.0.$CIRCLE_BUILD_NUM' \
+                -var 'webserver_image_tag=1.0.$CIRCLE_BUILD_NUM' \
+                -out tfplan
       - run:
           name: "Apply terraform"
           command: |
              cd deployment
-             terraform apply -auto-approve -var 'database_image_tag=1.0.$CIRCLE_BUILD_NUM' -var 'webserver_image_tag=1.0.$CIRCLE_BUILD_NUM'
+             terraform -input=false -auto-approve tfplan
 
