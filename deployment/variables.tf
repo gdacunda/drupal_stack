@@ -45,14 +45,6 @@ variable "ssh_pubkey_file" {
   description = "Path to an SSH public key"
 }
 
-variable "aws_access_key" {
-  description = "AWS access key"
-}
-
-variable "aws_secret_key" {
-  description = "AWS secret access key"
-}
-
 variable "database_image_tag" {
 }
 

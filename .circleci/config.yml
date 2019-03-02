@@ -38,9 +38,21 @@ jobs:
              docker push ${DOCKER_USER}/postgres:latest
              docker push ${DOCKER_USER}/postgres:1.0.$CIRCLE_BUILD_NUM
       - run:
-          name: "Plan"
+          name: "Init terraform"
           command: |
+             echo '${SSH_PUBLIC_KEY}' > deployment/networking/keys/admin_ssh_key.pub
              cd deployment
              if [ -e .terraform/modules ]; then rm -rf .terraform/modules; fi;
              terraform init -backend-config=backend.tfvars
              terraform state pull           
+      - run:
+          name: "Plan terraform"
+          command: |
+             cd deployment
+             terraform plan -detailed-exitcode -var 'database_image_tag=1.0.$CIRCLE_BUILD_NUM' -var 'webserver_image_tag=1.0.$CIRCLE_BUILD_NUM'
+      - run:
+          name: "Apply terraform"
+          command: |
+             cd deployment
+             terraform apply -auto-approve -var 'database_image_tag=1.0.$CIRCLE_BUILD_NUM' -var 'webserver_image_tag=1.0.$CIRCLE_BUILD_NUM'
+
