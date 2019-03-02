@@ -45,8 +45,5 @@ variable "ssh_pubkey_file" {
   description = "Path to an SSH public key"
 }
 
-variable "database_image_tag" {
-}
-
 variable "webserver_image_tag" {
 }

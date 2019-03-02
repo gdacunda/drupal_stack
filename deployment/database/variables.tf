@@ -30,8 +30,3 @@ variable "database_security_groups" {
 
 variable "webserver_security_group" {
 }
-
-variable "database_image_tag" {
-}
-
-

@@ -49,13 +49,6 @@ resource "aws_security_group" "database_servers" {
 
 }
 
-data "template_file" "user_data" {
-  template = "${file(format("%s/user_data.sh", path.module))}"
-  vars = {
-    database_image_tag = "${var.database_image_tag}"
-  }
-}
-
 resource "aws_instance" "database" {
   availability_zone = "${var.availability_zone}"
   key_name          = "${var.ssh_key_name}"
@@ -64,7 +57,7 @@ resource "aws_instance" "database" {
   source_dest_check = false
   subnet_id         = "${var.subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.database_servers.id}","${var.database_security_groups}"]
-  user_data              = "${data.template_file.user_data.rendered}"
+  user_data              = "${file(format("%s/user_data.sh", path.module))}"
 
   lifecycle {
     # Ignore changes to the AMI data source.

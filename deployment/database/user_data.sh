@@ -17,7 +17,7 @@ cat << EOF > /opt/deploy/docker-compose.yml
 version: "3.1"
 services:
   postgres:
-    image: gdacunda/postgres:${database_image_tag}
+    image: postgres:9.6
     container_name: db
     ports:
       - 5432:5432

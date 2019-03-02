@@ -51,6 +51,5 @@ module "database" {
   database_security_groups = ["${module.bastion.internal_ssh_security_group}"],
   webserver_security_group = "${module.webserver.webserver_security_group}",
   availability_zone  = "${var.availability_zones[0]}"
-  subnet_id         = "${module.vpc.internal_subnets[0]}",
-  database_image_tag = "${var.database_image_tag}"
+  subnet_id         = "${module.vpc.internal_subnets[0]}"
 }
