@@ -10,15 +10,17 @@ jobs:
           name: Install dependencies
           command: |
             apk add --no-cache \
-              py-pip=18.1-r0
+              py-pip=18.1-r0 curl
             pip install \
               docker-compose==1.23.2 \
               awscli==1.16.116
+            curl -L -s https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip -o /usr/local/bin/terraform.zip && unzip /usr/local/bin/terraform.zip -d /usr/local/bin && chmod +x /usr/local/bin/terraform
       - run:
           name: "Show Info"
           command: |
             docker-compose --version
             docker version
+            terraform --version
       - run:
           name: "Build images"
           command: docker-compose build
