@@ -1,0 +1,12 @@
+# Compiled files
+*.tfstate
+*.tfstate.backup
+
+# Module directory
+.terraform/
+
+# Jetbrains
+.idea/ 
+
+# ssh keys
+#deployment/networking/keys/
