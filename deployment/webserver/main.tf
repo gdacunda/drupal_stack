@@ -121,13 +121,13 @@ resource "aws_elb" "webserver" {
   security_groups = ["${aws_security_group.load_balancers.id}"]
   subnets         = ["${var.external_subnet_ids}"]
   cross_zone_load_balancing   = true
-  ssl_certificate_id = "${aws_iam_server_certificate.webserver_cert.arn}"
 
   listener {
     lb_protocol = "https"
     lb_port = 8888
     instance_protocol = "http"
     instance_port = 8888
+    ssl_certificate_id = "${aws_iam_server_certificate.webserver_cert.arn}"
   }
 
   health_check {
