@@ -37,10 +37,8 @@ jobs:
           name: "Init terraform"
           command: |
              echo ${SSH_PUBLIC_KEY} > deployment/networking/keys/admin_ssh_key.pub
-             echo ${WEBSERVER_CERT_CA_CHAIN} | sed -e 's/\s\+/\n/g' > deployment/networking/keys/webserver_cert_ca.pem
-             cat deployment/networking/keys/webserver_cert_ca.pem
-             echo ${WEBSERVER_CERT_KEY} | sed -e 's/\s\+/\n/g' > deployment/networking/keys/webserver_cert_key.pem
-             cat deployment/networking/keys/webserver_cert_key.pem
+             echo -e ${WEBSERVER_CERT_CA_CHAIN} > deployment/networking/keys/webserver_cert_ca.pem
+             echo -e ${WEBSERVER_CERT_KEY} > deployment/networking/keys/webserver_cert_key.pem
              cd deployment
              if [ -e .terraform/modules ]; then rm -rf .terraform/modules; fi;
              terraform init -backend-config=backend.tfvars
