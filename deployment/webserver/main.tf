@@ -121,6 +121,9 @@ resource "aws_elb" "webserver" {
   security_groups = ["${aws_security_group.load_balancers.id}"]
   subnets         = ["${var.external_subnet_ids}"]
   cross_zone_load_balancing   = true
+  idle_timeout                = 400
+  connection_draining         = true
+  connection_draining_timeout = 400
 
   listener {
     lb_protocol = "https"
@@ -198,6 +201,8 @@ resource "aws_autoscaling_group" "webserver" {
   launch_configuration = "${aws_launch_configuration.webserver.name}"
   vpc_zone_identifier  = ["${var.internal_subnet_ids}"]
   load_balancers       = ["${aws_elb.webserver.id}"]
+  min_elb_capacity     = "${var.min_size}"
+  termination_policies = ["OldestLaunchConfiguration"]
 
   lifecycle {
     create_before_destroy = true

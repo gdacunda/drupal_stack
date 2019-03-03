@@ -23,10 +23,10 @@ jobs:
             docker version
             terraform --version
       - run:
-          name: "Build images"
+          name: "Build image"
           command: docker-compose -p ${CIRCLE_PROJECT_REPONAME} build
       - run:
-          name: "Push Docker image"
+          name: "Push image"
           command: |
              docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
              docker tag ${CIRCLE_PROJECT_REPONAME}_webserver ${DOCKER_USER}/drupal:latest
