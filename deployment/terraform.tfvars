@@ -6,8 +6,8 @@ internal_subnets   = ["10.30.0.0/19", "10.30.64.0/19"]
 external_subnets   = ["10.30.32.0/20", "10.30.96.0/20"]
 availability_zones = ["us-east-1a", "us-east-1b"]
 ssh_pubkey_file    = "networking/keys/admin_ssh_key.pub"
-webserver_ca_cert_file = "deployment/networking/keys/webserver_cert_ca.pem"
-webserver_cert_key_file = "deployment/networking/keys/webserver_cert_key.pem"
+webserver_ca_cert_file = "networking/keys/webserver_cert_ca.pem"
+webserver_cert_key_file = "networking/keys/webserver_cert_key.pem"
 
 bastion_instance_type    = "t2.micro"
 nat_instance_type        = "t2.micro"
