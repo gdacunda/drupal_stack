@@ -18,6 +18,8 @@ version: "3.1"
 services:
   postgres:
     image: postgres:9.6
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres"}]'
     container_name: db
     ports:
       - 5432:5432
@@ -32,6 +34,9 @@ services:
     container_name: ddagent
     environment:
      - DD_API_KEY=6d06a8f4b2d864a241ee9394e96399c8
+     - DD_LOGS_ENABLED=true
+     - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+     - DD_AC_EXCLUDE="name:datadog-agent"
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - /proc/mounts:/host/proc/mounts:ro
