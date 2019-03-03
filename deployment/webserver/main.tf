@@ -108,8 +108,8 @@ resource "aws_security_group" "load_balancers" {
 
 resource "aws_iam_server_certificate" "webserver_cert" {
   name_prefix      = "${var.webserver_cert_name}-cert-"
-  certificate_body = "${file(${var.webserver_ca_cert_file})}"
-  private_key      = "${file(${var.webserver_cert_key_file})}"
+  certificate_body = "${file(var.webserver_ca_cert_file)}"
+  private_key      = "${file(var.webserver_cert_key_file)}"
 
   lifecycle {
     create_before_destroy = true
