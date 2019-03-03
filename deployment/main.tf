@@ -39,7 +39,7 @@ module "webserver" {
   internal_subnet_ids = "${module.vpc.internal_subnets}"
   external_subnet_ids = "${module.vpc.external_subnets}"
   webserver_image_tag = "${var.webserver_image_tag}"
-  webserver_cert_arn = "${webserver_cert_arn}"
+  webserver_cert_arn = "${var.webserver_cert_arn}"
 }
 
 module "database" {
