@@ -106,16 +106,6 @@ resource "aws_security_group" "load_balancers" {
 
 }
 
-resource "aws_iam_server_certificate" "webserver_cert" {
-  name_prefix      = "${var.webserver_cert_name}-cert-"
-  certificate_body = "${file(var.webserver_ca_cert_file)}"
-  private_key      = "${file(var.webserver_cert_key_file)}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "aws_elb" "webserver" {
   name = "${var.environment}-webserver"
   security_groups = ["${aws_security_group.load_balancers.id}"]
@@ -130,7 +120,7 @@ resource "aws_elb" "webserver" {
     lb_port = 8888
     instance_protocol = "http"
     instance_port = 8888
-    ssl_certificate_id = "${aws_iam_server_certificate.webserver_cert.arn}"
+    ssl_certificate_id = "${var.webserver_cert_arn}"
   }
 
   health_check {
@@ -193,11 +183,11 @@ resource "aws_launch_configuration" "webserver" {
 }
 
 resource "aws_autoscaling_group" "webserver" {
-  name                 = "${var.environment}-webserver"
+  name_prefix          = "asg-${aws_launch_configuration.webserver.name}"
   min_size             = "${var.min_size}"
   max_size             = "${var.max_size}"
   desired_capacity     = "${var.desired_capacity}"
-  health_check_type    = "EC2"
+  health_check_type    = "ELB"
   launch_configuration = "${aws_launch_configuration.webserver.name}"
   vpc_zone_identifier  = ["${var.internal_subnet_ids}"]
   load_balancers       = ["${aws_elb.webserver.id}"]

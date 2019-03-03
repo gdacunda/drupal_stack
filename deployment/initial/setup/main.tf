@@ -1,6 +1,4 @@
 provider "aws" {
-  access_key = "${var.aws_access_key}"
-  secret_key = "${var.aws_secret_key}"
   region     = "${var.region}"
 }
 
@@ -17,4 +15,15 @@ resource "aws_s3_bucket" "terraform-state-storage" {
     Name = "${var.region}-terraform-states"
     ManagedBy = "Terraform"
   }
-} 
+}
+
+resource "aws_iam_server_certificate" "webserver_cert" {
+  name_prefix      = "${var.webserver_cert_name}-cert-"
+  certificate_body = "${file(var.webserver_ca_cert_file)}"
+  private_key      = "${file(var.webserver_cert_key_file)}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+

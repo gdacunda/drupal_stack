@@ -10,12 +10,11 @@ variable "region" {
   description = ""
 }
 
-variable "aws_access_key" {
-  description = "AWS access key"
+variable "webserver_cert_name" {
 }
 
-variable "aws_secret_key" {
-  description = "AWS secret access key"
+variable "webserver_ca_cert_file" {
 }
 
-
+variable "webserver_cert_key_file" {
+}

@@ -37,8 +37,6 @@ jobs:
           name: "Init terraform"
           command: |
              echo ${SSH_PUBLIC_KEY} > deployment/networking/keys/admin_ssh_key.pub
-             echo -e ${WEBSERVER_CERT_CA_CHAIN} > deployment/networking/keys/webserver_cert_ca.pem
-             echo -e ${WEBSERVER_CERT_KEY} > deployment/networking/keys/webserver_cert_key.pem
              cd deployment
              if [ -e .terraform/modules ]; then rm -rf .terraform/modules; fi;
              terraform init -backend-config=backend.tfvars
@@ -50,7 +48,7 @@ jobs:
              terraform plan \
                 -input=false \
                 -var "webserver_image_tag=1.0.$CIRCLE_BUILD_NUM" \
-                -var "webserver_cert_name=cms-challenge.ddns.net" \
+                -var "webserver_cert_arn=$WEBSERVER_IAM_CERT" \
                 -out tfplan
       - run:
           name: "Apply terraform"
