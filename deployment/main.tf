@@ -12,8 +12,8 @@ module "vpc" {
   internal_subnets   = "${var.internal_subnets}"
   external_subnets   = "${var.external_subnets}"
   availability_zones = "${var.availability_zones}"
-  environment        = "${var.environment}",
-  ssh_pubkey_file    = "${var.ssh_pubkey_file}",
+  environment        = "${var.environment}"
+  ssh_pubkey_file    = "${var.ssh_pubkey_file}"
   nat_instance_type  = "${var.nat_instance_type}"
 }
 
@@ -24,7 +24,7 @@ module "bastion" {
   vpc_id          = "${module.vpc.id}"
   subnet_ids      = "${module.vpc.external_subnets}"
   ssh_key_name    = "${module.vpc.ssh_key_name}"
-  environment     = "${var.environment}",
+  environment     = "${var.environment}"
 }
 
 module "webserver" {
@@ -32,13 +32,16 @@ module "webserver" {
   region          = "${var.region}"
   vpc_id          = "${module.vpc.id}"
   ssh_key_name    = "${module.vpc.ssh_key_name}"
-  environment     = "${var.environment}",
-  webserver_instance_type   = "${var.webserver_instance_type}",
-  webserver_security_groups = ["${module.bastion.internal_ssh_security_group}"],
+  environment     = "${var.environment}"
+  webserver_instance_type   = "${var.webserver_instance_type}"
+  webserver_security_groups = ["${module.bastion.internal_ssh_security_group}"]
   availability_zones = "${var.availability_zones}"
-  internal_subnet_ids = "${module.vpc.internal_subnets}",
-  external_subnet_ids = "${module.vpc.external_subnets}",
+  internal_subnet_ids = "${module.vpc.internal_subnets}"
+  external_subnet_ids = "${module.vpc.external_subnets}"
   webserver_image_tag = "${var.webserver_image_tag}"
+  webserver_cert_name = "${var.webserver_cert_name}"
+  webserver_ca_cert_file = "${var.webserver_ca_cert_file}"
+  webserver_cert_key_file = "${var.webserver_cert_key_file}"
 }
 
 module "database" {
@@ -46,9 +49,9 @@ module "database" {
   region          = "${var.region}"
   vpc_id          = "${module.vpc.id}"
   ssh_key_name    = "${module.vpc.ssh_key_name}"
-  environment     = "${var.environment}",
+  environment     = "${var.environment}"
   database_instance_type   = "${var.database_instance_type}",
-  database_security_groups = ["${module.bastion.internal_ssh_security_group}"],
+  database_security_groups = ["${module.bastion.internal_ssh_security_group}"]
   webserver_security_group = "${module.webserver.webserver_security_group}",
   availability_zone  = "${var.availability_zones[0]}"
   subnet_id         = "${module.vpc.internal_subnets[0]}"

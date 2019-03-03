@@ -106,16 +106,26 @@ resource "aws_security_group" "load_balancers" {
 
 }
 
+resource "aws_iam_server_certificate" "webserver_cert" {
+  name_prefix      = "${var.webserver_cert_name}-cert-"
+  certificate_body = "${file(${var.webserver_ca_cert_file})}"
+  private_key      = "${file(${var.webserver_cert_key_file})}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_elb" "webserver" {
   name = "${var.environment}-webserver"
   security_groups = ["${aws_security_group.load_balancers.id}"]
   subnets         = ["${var.external_subnet_ids}"]
   cross_zone_load_balancing   = true
+  ssl_certificate_id = "${aws_iam_server_certificate.webserver_cert.arn}"
 
   listener {
-    lb_protocol = "http"
+    lb_protocol = "https"
     lb_port = 8888
-
     instance_protocol = "http"
     instance_port = 8888
   }
