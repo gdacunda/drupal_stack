@@ -197,7 +197,7 @@ resource "aws_autoscaling_group" "webserver" {
   min_size             = "${var.min_size}"
   max_size             = "${var.max_size}"
   desired_capacity     = "${var.desired_capacity}"
-  health_check_type    = "ELB"
+  health_check_type    = "EC2"
   launch_configuration = "${aws_launch_configuration.webserver.name}"
   vpc_zone_identifier  = ["${var.internal_subnet_ids}"]
   load_balancers       = ["${aws_elb.webserver.id}"]
