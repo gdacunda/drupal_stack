@@ -50,8 +50,9 @@ services:
      - DD_AC_EXCLUDE="name:datadog-agent"
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-     - /proc/mounts:/host/proc/mounts:ro
-     - /sys/fs/cgroup:/host/sys/fs/cgroup:ro
+     - /proc/:/host/proc/:ro
+     - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
+     - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
 EOF
 
 echo "Starting containers"
