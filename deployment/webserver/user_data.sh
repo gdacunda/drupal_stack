@@ -33,10 +33,10 @@ services:
     ports:
       - 8888:80
     volumes:
-      - /var/www/html/modules
-      - /var/www/html/profiles
-      - /var/www/html/themes
-      - /mnt/efs-data/drupal-data:/var/www/html/sites/default/files
+      - /mnt/efs-data/drupal-data/modules:/var/www/html/modules
+      - /mnt/efs-data/drupal-data/profiles:/var/www/html/profiles
+      - /mnt/efs-data/drupal-data/themes:/var/www/html/themes
+      - /mnt/efs-data/drupal-data/files:/var/www/html/sites/default/files
     container_name: web
     restart: always
 
