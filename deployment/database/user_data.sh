@@ -36,12 +36,12 @@ services:
      - DD_API_KEY=${datadog_api_key}
      - DD_LOGS_ENABLED=true
      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
-     - DD_AC_EXCLUDE="name:datadog-agent"
+     - DD_AC_EXCLUDE="name:ddagent"
+     - EC2_TAGS="yes"
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - /proc/:/host/proc/:ro
-     - /opt/datadog-agent/run:/opt/datadog-agent/run:rw
-     - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+     - /cgroup/:/host/sys/fs/cgroup:ro
      - /opt/deploy/url.yaml:/etc/datadog-agent/conf.d/http_check.d/url.yaml
 
 volumes:
