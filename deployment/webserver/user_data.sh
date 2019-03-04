@@ -27,6 +27,8 @@ chown -R 33:33 /mnt/efs-data/drupal-data
 
 echo "Creating the Drupal config file"
 cat << EOF > /mnt/efs-data/drupal-data/settings.php
+<?php
+
 \$databases['default']['default'] = array (
   'database' => 'drupal',
   'username' => 'postgres',
@@ -34,7 +36,7 @@ cat << EOF > /mnt/efs-data/drupal-data/settings.php
   'prefix' => '',
   'host' => '${database_host}',
   'port' => '5432',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\pgsql',
+  'namespace' => 'Drupal\\\Core\\\Database\\\Driver\\\pgsql',
   'driver' => 'pgsql',
 );
 $settings['install_profile'] = 'standard';
