@@ -13,11 +13,15 @@ chmod +x /usr/local/bin/docker-compose
 
 echo "Mounting efs drive"
 yum install -y nfs-utils amazon-efs-utils
-sudo mkdir -p /mnt/efs-data/
+mkdir -p /mnt/efs-data/
 echo "${efs_system_id}:/ /mnt/efs-data efs tls,_netdev" >> /etc/fstab
 mount -a -t efs defaults
 
-sudo mkdir -p /mnt/efs-data/drupal-data/
+mkdir -p /mnt/efs-data/drupal-data/ \
+         /mnt/efs-data/drupal-data/modules \
+         /mnt/efs-data/drupal-data/profiles \
+         /mnt/efs-data/drupal-data/themes \
+         /mnt/efs-data/drupal-data/files \
 chown ec2-user:ec2-user /mnt/efs-data
 chown -R 33:33 /mnt/efs-data/drupal-data
 
