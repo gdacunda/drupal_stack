@@ -27,7 +27,7 @@ chown -R 33:33 /mnt/efs-data/drupal-data
 
 echo "Creating the Drupal config file"
 cat << EOF > /mnt/efs-data/drupal-data/settings.php
-$databases['default']['default'] = array (
+\$databases['default']['default'] = array (
   'database' => 'drupal',
   'username' => 'postgres',
   'password' => 'D3v0psCha113ng3',
@@ -39,6 +39,7 @@ $databases['default']['default'] = array (
 );
 $settings['install_profile'] = 'standard';
 EOF
+chown -R 33:33 /mnt/efs-data/drupal-data/settings.php
 chmod 0644 /mnt/efs-data/drupal-data/settings.php
 
 echo "Creating the docker-compose.yml file"
