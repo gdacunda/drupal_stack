@@ -26,7 +26,7 @@ chown -R 33:33 /mnt/efs-data/drupal-data
 
 echo "Creating the Drupal empty config file"
 drupal_settings_file=/mnt/efs-data/drupal-data/settings.php
-if [[ ! -e $drupal_settings_file ]]; then
+if [[ ! -f "$drupal_settings_file" ]]; then
     touch $drupal_settings_file
     chown -R 33:33 $drupal_settings_file
     chmod 777 $drupal_settings_file
