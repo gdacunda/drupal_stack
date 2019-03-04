@@ -24,7 +24,6 @@ mkdir -p /mnt/efs-data/drupal-data/ \
 chown ec2-user:ec2-user /mnt/efs-data
 chown -R 33:33 /mnt/efs-data/drupal-data
 
-
 echo "Creating the Drupal empty config file"
 drupal_settings_file=/mnt/efs-data/drupal-data/settings.php
 if [[ ! -e \$drupal_settings_file ]]; then
@@ -56,7 +55,7 @@ services:
     image: datadog/agent:latest
     container_name: ddagent
     environment:
-     - DD_API_KEY=6d06a8f4b2d864a241ee9394e96399c8
+     - DD_API_KEY=${datadog_api_key}
      - DD_LOGS_ENABLED=true
      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
      - DD_AC_EXCLUDE="name:datadog-agent"

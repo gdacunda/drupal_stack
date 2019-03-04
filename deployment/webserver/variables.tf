@@ -58,3 +58,7 @@ variable "webserver_image_tag" {
 
 variable "webserver_cert_arn" {
 }
+
+variable "datadog_api_key" {
+}
+

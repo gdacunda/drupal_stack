@@ -30,3 +30,6 @@ variable "database_security_groups" {
 
 variable "webserver_security_group" {
 }
+
+variable "datadog_api_key" {
+}

@@ -49,6 +49,13 @@ resource "aws_security_group" "database_servers" {
 
 }
 
+data "template_file" "user_data" {
+  template = "${file(format("%s/user_data.sh", path.module))}"
+  vars = {
+    datadog_api_key = "${var.datadog_api_key}"
+  }
+}
+
 resource "aws_instance" "database" {
   availability_zone = "${var.availability_zone}"
   key_name          = "${var.ssh_key_name}"
@@ -56,8 +63,8 @@ resource "aws_instance" "database" {
   instance_type     = "${var.database_instance_type}"
   source_dest_check = false
   subnet_id         = "${var.subnet_id}"
+  user_data         = "${data.template_file.user_data.rendered}"
   vpc_security_group_ids = ["${aws_security_group.database_servers.id}","${var.database_security_groups}"]
-  user_data              = "${file(format("%s/user_data.sh", path.module))}"
 
   lifecycle {
     # Ignore changes to the AMI data source.

@@ -38,6 +38,7 @@ module "database" {
   webserver_security_group = "${module.webserver.webserver_security_group}",
   availability_zone  = "${var.availability_zones[0]}"
   subnet_id         = "${module.vpc.internal_subnets[0]}"
+  datadog_api_key   = "${var.datadog_api_key}"
 }
 
 module "webserver" {
@@ -53,4 +54,5 @@ module "webserver" {
   external_subnet_ids = "${module.vpc.external_subnets}"
   webserver_image_tag = "${var.webserver_image_tag}"
   webserver_cert_arn = "${var.webserver_cert_arn}"
+  datadog_api_key   = "${var.datadog_api_key}"
 }

@@ -49,6 +49,7 @@ jobs:
                 -input=false \
                 -var "webserver_image_tag=1.0.$CIRCLE_BUILD_NUM" \
                 -var "webserver_cert_arn=$WEBSERVER_IAM_CERT" \
+                -var "datadog_api_key=$DATADOG_API_KEY" \
                 -out tfplan
       - run:
           name: "Apply terraform"
