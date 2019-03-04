@@ -27,6 +27,19 @@ module "bastion" {
   environment     = "${var.environment}"
 }
 
+module "database" {
+  source          = "database"
+  region          = "${var.region}"
+  vpc_id          = "${module.vpc.id}"
+  ssh_key_name    = "${module.vpc.ssh_key_name}"
+  environment     = "${var.environment}"
+  database_instance_type   = "${var.database_instance_type}",
+  database_security_groups = ["${module.bastion.internal_ssh_security_group}"]
+  webserver_security_group = "${module.webserver.webserver_security_group}",
+  availability_zone  = "${var.availability_zones[0]}"
+  subnet_id         = "${module.vpc.internal_subnets[0]}"
+}
+
 module "webserver" {
   source          = "webserver"
   region          = "${var.region}"
@@ -40,17 +53,5 @@ module "webserver" {
   external_subnet_ids = "${module.vpc.external_subnets}"
   webserver_image_tag = "${var.webserver_image_tag}"
   webserver_cert_arn = "${var.webserver_cert_arn}"
-}
-
-module "database" {
-  source          = "database"
-  region          = "${var.region}"
-  vpc_id          = "${module.vpc.id}"
-  ssh_key_name    = "${module.vpc.ssh_key_name}"
-  environment     = "${var.environment}"
-  database_instance_type   = "${var.database_instance_type}",
-  database_security_groups = ["${module.bastion.internal_ssh_security_group}"]
-  webserver_security_group = "${module.webserver.webserver_security_group}",
-  availability_zone  = "${var.availability_zones[0]}"
-  subnet_id         = "${module.vpc.internal_subnets[0]}"
+  database_host      = "${module.database.database_host}"
 }

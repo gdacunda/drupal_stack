@@ -18,12 +18,28 @@ echo "${efs_system_id}:/ /mnt/efs-data efs tls,_netdev" >> /etc/fstab
 mount -a -t efs defaults
 
 mkdir -p /mnt/efs-data/drupal-data/ \
-         /mnt/efs-data/drupal-data/modules \
          /mnt/efs-data/drupal-data/profiles \
-         /mnt/efs-data/drupal-data/themes \
+         /mnt/efs-data/drupal-data/modules \
          /mnt/efs-data/drupal-data/files
 chown ec2-user:ec2-user /mnt/efs-data
 chown -R 33:33 /mnt/efs-data/drupal-data
+
+
+echo "Creating the Drupal config file"
+cat << EOF > /mnt/efs-data/drupal-data/settings.php
+$databases['default']['default'] = array (
+  'database' => 'drupal',
+  'username' => 'postgres',
+  'password' => 'D3v0psCha113ng3',
+  'prefix' => '',
+  'host' => '${database_host}',
+  'port' => '5432',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\pgsql',
+  'driver' => 'pgsql',
+);
+$settings['install_profile'] = 'standard';
+EOF
+chmod 0644 /mnt/efs-data/drupal-data/settings.php
 
 echo "Creating the docker-compose.yml file"
 mkdir -p /opt/deploy/
@@ -39,8 +55,8 @@ services:
     volumes:
       - /mnt/efs-data/drupal-data/modules:/var/www/html/modules
       - /mnt/efs-data/drupal-data/profiles:/var/www/html/profiles
-      - /mnt/efs-data/drupal-data/themes:/var/www/html/themes
       - /mnt/efs-data/drupal-data/files:/var/www/html/sites/default/files
+      - /mnt/efs-data/drupal-data/settings.php:/var/www/html/sites/default/settings.php
     container_name: web
     restart: always
 
