@@ -21,7 +21,7 @@ mkdir -p /mnt/efs-data/drupal-data/ \
          /mnt/efs-data/drupal-data/modules \
          /mnt/efs-data/drupal-data/profiles \
          /mnt/efs-data/drupal-data/themes \
-         /mnt/efs-data/drupal-data/files \
+         /mnt/efs-data/drupal-data/files
 chown ec2-user:ec2-user /mnt/efs-data
 chown -R 33:33 /mnt/efs-data/drupal-data
 
