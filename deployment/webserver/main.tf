@@ -164,7 +164,6 @@ data "template_file" "user_data" {
   vars = {
     webserver_image_tag = "${var.webserver_image_tag}"
     efs_system_id = "${aws_efs_file_system.nfs.id}"
-    database_host = "${var.database_host}"
   }
 }
 

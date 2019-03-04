@@ -58,8 +58,3 @@ variable "webserver_image_tag" {
 
 variable "webserver_cert_arn" {
 }
-
-variable "database_host" {
-}
-
-

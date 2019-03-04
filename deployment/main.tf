@@ -53,5 +53,4 @@ module "webserver" {
   external_subnet_ids = "${module.vpc.external_subnets}"
   webserver_image_tag = "${var.webserver_image_tag}"
   webserver_cert_arn = "${var.webserver_cert_arn}"
-  database_host      = "${module.database.database_host}"
 }

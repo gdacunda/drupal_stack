@@ -25,24 +25,13 @@ chown ec2-user:ec2-user /mnt/efs-data
 chown -R 33:33 /mnt/efs-data/drupal-data
 
 
-echo "Creating the Drupal config file"
-cat << EOF > /mnt/efs-data/drupal-data/settings.php
-<?php
-
-\$databases['default']['default'] = array (
-  'database' => 'drupal',
-  'username' => 'postgres',
-  'password' => 'D3v0psCha113ng3',
-  'prefix' => '',
-  'host' => '${database_host}',
-  'port' => '5432',
-  'namespace' => 'Drupal\\\Core\\\Database\\\Driver\\\pgsql',
-  'driver' => 'pgsql',
-);
-$settings['install_profile'] = 'standard';
-EOF
-chown -R 33:33 /mnt/efs-data/drupal-data/settings.php
-chmod 0644 /mnt/efs-data/drupal-data/settings.php
+echo "Creating the Drupal empty config file"
+drupal_settings_file=/mnt/efs-data/drupal-data/settings.php
+if [[ ! -e \$drupal_settings_file ]]; then
+    touch \$drupal_settings_file
+    chown -R 33:33 \$drupal_settings_file
+    chmod 777 \$drupal_settings_file
+fi
 
 echo "Creating the docker-compose.yml file"
 mkdir -p /opt/deploy/
