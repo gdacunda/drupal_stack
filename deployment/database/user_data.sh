@@ -19,7 +19,7 @@ services:
   postgres:
     image: postgres:9.6
     labels:
-      com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres"}]'
+      com.datadoghq.ad.logs: '[{"source": "postgres", "service": "postgres", "version": "9.6"}]'
     container_name: db
     ports:
       - 5432:5432

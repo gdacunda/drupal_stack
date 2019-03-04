@@ -40,7 +40,7 @@ services:
   web:
     image: gdacunda/drupal:${webserver_image_tag}
     labels:
-      com.datadoghq.ad.logs: '[{"source": "apache", "service": "drupal"}]'
+      com.datadoghq.ad.logs: '[{"source": "apache", "service": "drupal", "version": "${webserver_image_tag}"}]'
     ports:
       - 8888:80
     volumes:
