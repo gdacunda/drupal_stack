@@ -11,20 +11,6 @@ echo "Installing Docker Compose"
 curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
-echo "Creating the http status config file"
-cat << EOF > /opt/deploy/url.yaml
-init_config:
-
-instances:
-  - name: Drupal Service
-    url: https://cms-challenge.ddns.net:8888/core/install.php
-    disable_ssl_validation: false
-    check_certificate_expiration: true
-    days_warning: 28
-    days_critical: 14
-    timeout: 3
-EOF
-
 echo "Creating the docker-compose.yml file"
 mkdir -p /opt/deploy/
 cat << EOF > /opt/deploy/docker-compose.yml
@@ -61,6 +47,20 @@ services:
 volumes:
   postgres_data:
     driver: local
+EOF
+
+echo "Creating the http status config file"
+cat << EOF > /opt/deploy/url.yaml
+init_config:
+
+instances:
+  - name: Drupal Service
+    url: https://cms-challenge.ddns.net:8888/core/install.php
+    disable_ssl_validation: false
+    check_certificate_expiration: true
+    days_warning: 28
+    days_critical: 14
+    timeout: 3
 EOF
 
 echo "Starting containers"
