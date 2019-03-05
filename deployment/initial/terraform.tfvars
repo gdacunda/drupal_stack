@@ -1,4 +1,4 @@
-bucket = "challenge-terraform-states"
+bucket = "deployment-ops-terraform-states"
 region = "us-east-1"
 
 webserver_cert_name     = "cms-challenge.ddns.net"

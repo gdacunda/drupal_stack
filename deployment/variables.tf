@@ -53,3 +53,9 @@ variable "webserver_cert_arn" {
 
 variable "datadog_api_key" {
 }
+
+variable "webserver_min_size" {
+}
+
+variable "webserver_max_size" {
+}

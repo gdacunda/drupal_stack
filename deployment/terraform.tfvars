@@ -12,4 +12,6 @@ nat_instance_type        = "t2.micro"
 webserver_instance_type  = "t2.micro"
 database_instance_type   = "t2.micro"
 
-webserver_image_tag = "0.0.1"
+webserver_image_tag = "1.0.52"
+webserver_min_size = 2
+webserver_max_size = 2

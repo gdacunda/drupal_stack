@@ -55,4 +55,6 @@ module "webserver" {
   webserver_image_tag = "${var.webserver_image_tag}"
   webserver_cert_arn = "${var.webserver_cert_arn}"
   datadog_api_key   = "${var.datadog_api_key}"
+  min_size = "${var.webserver_min_size}"
+  max_size = "${var.webserver_max_size}"
 }
